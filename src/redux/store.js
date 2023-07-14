@@ -1,29 +1,10 @@
-import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
+import usersReducer from './userSlice';
 
-const initialState = {
-  followersCount: 100500,
-  isFollowing: false
-};
-
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case 'FOLLOW':
-      return {
-        ...state,
-        followersCount: state.followersCount + 1,
-        isFollowing: true
-      };
-    case 'UNFOLLOW':
-      return {
-        ...state,
-        followersCount: state.followersCount - 1,
-        isFollowing: false
-      };
-    default:
-      return state;
-  }
-};
-
-const store = createStore(reducer);
+const store = configureStore({
+  reducer: {
+    users: usersReducer,
+  },
+});
 
 export default store;
