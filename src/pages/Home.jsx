@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUsers } from '../redux/operations';
-import { nextPage } from 'redux/userSlice';
+import { nextPage } from '../redux/userSlice';
 import OutlinedCard from '../components/Card';
 
 const Home = () => {

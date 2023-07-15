@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -10,47 +10,46 @@ import ImgBig from '../assets/contentImg.png';
 import EclipseCircle from '../assets/EllipseColor.png';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { followUser } from '../redux/actions';
 import { getFollowingStatus, updateFollowingStatus } from 'redux/operations';
-import { updateFollowers } from '../redux/userSlice';
 
 const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
   const dispatch = useDispatch();
-  const isFollowing = useSelector((state) => {
-    const currentUser = state.users.users.find((user) => user.id === id);
-    return currentUser ? currentUser.isFollowing : false;
-  });
-  const updatedFollowers = useSelector((state) => {
-    const currentUser = state.users.users.find((user) => user.id === id);
-    return currentUser ? currentUser.followers : followers;
-  });
+  const [isFollowing, setIsFollowing] = useState(false);
+  const [currentFollowers, setCurrentFollowers] = useState(followers);
 
   useEffect(() => {
     getFollowingStatus(id)
       .then((status) => {
-        dispatch(updateFollowingStatus({ id, isFollowing: status }));
+        setIsFollowing(status);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [dispatch, id]);
+  }, [id]);
 
   const handleFollowClick = () => {
+    const updatedFollowersCount = isFollowing ? currentFollowers - 1 : currentFollowers + 1;
+
+    setIsFollowing(!isFollowing);
+    setCurrentFollowers(updatedFollowersCount);
+
     dispatch(
       updateFollowingStatus({
         id,
         isFollowing: !isFollowing,
+        followers: updatedFollowersCount
       })
     )
-      .then((status) => {
-        const updatedFollowersCount = isFollowing ? updatedFollowers - 1 : updatedFollowers + 1;
-        dispatch(updateFollowers({ userId: id, updatedFollowers: updatedFollowersCount }));
-        dispatch(followUser());
+      .then(() => {
+        setCurrentFollowers(updatedFollowersCount);
       })
       .catch((error) => {
         console.log(error);
+        setIsFollowing(!isFollowing);
+        setCurrentFollowers(followers);
       });
   };
+
 
   return (
     <Box>
@@ -132,9 +131,12 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
                   fontWeight: 500,
                   lineHeight: 'normal',
                   textTransform: 'uppercase',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
                 }}
               >
-                {updatedFollowers} Followers
+                {currentFollowers} Followers
               </Typography>
             </Box>
             <Box sx={{ position: 'absolute', bottom: '5.5%', left: '50%', transform: 'translate(-50%, -50%)' }}>
