@@ -11,6 +11,7 @@ import EclipseCircle from '../assets/EllipseColor.png';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { getFollowingStatus, updateFollowingStatus } from 'redux/operations';
+import { Link } from 'react-router-dom';
 
 const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
   const dispatch = useDispatch();
@@ -51,11 +52,14 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
   };
 
   const formatNumberWithCommas = (number) => {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
   return (
-    <Box>
+    <Box sx={{
+      margin: 0,
+      }} 
+    >
       <Card
         sx={{
           width: 380,
@@ -65,9 +69,10 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
             'linear-gradient(142deg, #471CA9 0%, #5736A3 69.10%, #4B2A99 100%)',
           boxShadow:
             '-2.5776965618133545px 6.873857021331787px 20.621572494506836px 0px rgba(0, 0, 0, 0.23)',
+            margin: 0,
         }}
       >
-        <CardContent sx={{ position: 'relative', height: '100%', padding: 0 }}>
+        <CardContent sx={{ position: 'relative', height: '100%', padding: 0}}>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', height: '100%' }}>
             <img src={LogoContent} alt="LogoContent" style={{ width: '76px', marginTop: '20px', marginLeft: '20px' }} />
             <img src={ImgBig} alt="ImgBig" style={{ width: '308px', height: '168px', marginLeft: '36px', marginTop: '-15px' }} />
@@ -110,7 +115,8 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
               </Typography>
             </Box>
             <Box sx={{ position: 'absolute', top: '66%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-              <Typography
+            <Link to={`/tweets/${id}`} style={{ textDecoration: 'none' }}>
+            <Typography
                 sx={{
                   color: '#EBD8FF',
                   fontFamily: 'Montserrat, sans-serif',
@@ -119,10 +125,17 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
                   fontWeight: 500,
                   lineHeight: 'normal',
                   textTransform: 'uppercase',
+                  '&:hover': {
+                    color: '#5CD3A8',
+                  },
+                  '&:active': {
+                    color: '#5CD3A8',
+                  },
                 }}
               >
                 {tweets} tweets
               </Typography>
+            </Link>
             </Box>
             <Box sx={{ position: 'absolute', top: '74%', left: '50%', transform: 'translate(-50%, -50%)' }}>
               <Typography

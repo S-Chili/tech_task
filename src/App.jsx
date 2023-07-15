@@ -7,7 +7,7 @@ export const App = () => {
     <Router basename="/tech_task">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/tweets" element={<Tweets />} />
+        <Route path="/tweets/:id" element={<Tweets />} />
       </Routes>
     </Router>
   );
