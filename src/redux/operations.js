@@ -25,12 +25,11 @@ export const updateFollowingStatus = createAsyncThunk(
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      const response = await axios.put(`${BASE_URL}/${id}`, {
+      await axios.put(`${BASE_URL}/${id}`, {
         isFollowing,
         followers 
       });
-      const data = response.data;
-      return {
+      return  {
         id,
         isFollowing
       };

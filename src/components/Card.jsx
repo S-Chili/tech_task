@@ -50,6 +50,9 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
       });
   };
 
+  const formatNumberWithCommas = (number) => {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
 
   return (
     <Box>
@@ -136,7 +139,7 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
                   textOverflow: 'ellipsis',
                 }}
               >
-                {currentFollowers} Followers
+                {formatNumberWithCommas(currentFollowers)} Followers
               </Typography>
             </Box>
             <Box sx={{ position: 'absolute', bottom: '5.5%', left: '50%', transform: 'translate(-50%, -50%)' }}>
