@@ -52,7 +52,10 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
   };
 
   const formatNumberWithCommas = (number) => {
-    return number.toString()?.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    if (number) {
+      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    return "";
   };
 
   return (

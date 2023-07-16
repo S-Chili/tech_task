@@ -159,14 +159,22 @@ const Tweets = () => {
           </CardContent>
         </Card>
       </Box>
-      <Box>
-       {[...Array(tweets)].map((_, index) => (
-          <Card key={index} sx={{ margin: '10px', padding: '10px' }}>
-            <CardContent>
-              <Typography variant="body1" component="div">
-                <Typography>{user}</Typography>
-                <Typography>{generateRandomText()}</Typography>
-                <Typography>{generateRandomDate()}</Typography>
+      <Box sx={{ margin: '0 auto', marginTop: '30px', marginBottom: '30px', display: 'flex', flexWrap: 'wrap', gap: '20px', flexDirection: 'row' }}>
+        {[...Array(tweets)].map((_, index) => (
+          <Card
+            key={index}
+            sx={{
+              flex: '0 0 calc(50% - 10px)',
+              backgroundColor: '#F3F3F3',
+              borderRadius: '10px',
+              boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)',
+            }}
+          >
+            <CardContent sx={{ padding: '12px' }}>
+              <Typography sx={{ fontWeight: 'bold' }}>{user}</Typography>
+              <Typography sx={{ marginTop: '8px' }}>{generateRandomText()}</Typography>
+              <Typography variant="caption" sx={{ color: 'gray', marginTop: '12px' }}>
+                {generateRandomDate()}
               </Typography>
             </CardContent>
           </Card>
