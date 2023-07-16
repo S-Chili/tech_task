@@ -7,9 +7,11 @@ import {
   Button, 
   Box, 
   Checkbox, 
-  TextField, 
-  Autocomplete,
   Link,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
 
 const Home = () => {
@@ -38,6 +40,17 @@ const Home = () => {
     marginBottom: '30px',
   };
 
+  const inputLabelStyle = {
+    transform: 'translateY(-50%)',
+    position: 'absolute',
+    left: '60%',
+    top: '50%',
+    pointerEvents: 'none',
+    color: '#808080',
+    fontSize: '16px',
+    fontWeight: '400',
+  };
+
   const renderedCards = users
     .filter((user) => {
       if (filter === 'Show All') return true;
@@ -64,48 +77,39 @@ const Home = () => {
     { title: 'Following' },
   ];
 
-  const handleFilterChange = (event, value) => {
-    if (value.length === 0) {
-      setFilter('Show All');
-    } else {
-      const selectedFilter = value[0].title;
-      const isValidFilter = choosesVars.some((option) => option.title === selectedFilter);
-      if (isValidFilter) {
-        setFilter(selectedFilter);
-      }
-    }
-  };
-  
-  const handleAutocompleteClick = (event) => {
-    if (event.target.textContent === 'Show All') {
-      setFilter('Show All');
-    }
+  const handleFilterChange = (event) => {
+    setFilter(event.target.value);
   };
 
   return (
     <Box style={containerMain} >
-      <Autocomplete
-        multiple
-        id="checkboxes-tags-demo"
-        onClick={handleAutocompleteClick}
-        options={choosesVars}
-        getOptionLabel={(option) => option.title}
-        renderOption={(props, option, { selected }) => (
-          <li {...props}>
-            <Checkbox style={{ marginRight: 8 }} checked={selected} />
-            {option.title}
-          </li>
-        )}
-        style={{
-          width: '100%',
-          backgroundColor: '#EBD8FF',
-          boxShadow: '-2.5776965618133545px 6.873857021331787px 20.621572494506836px 0px rgba(0, 0, 0, 0.23)',
-        }}
-        value={filter === 'Show All' ? [] : [{ title: filter }]}
-        onChange={handleFilterChange}
-        renderInput={(params) => <TextField {...params} label="Select which type of cards you want to view?" />}
-        isOptionEqualToValue={(option, value) => option.title === value.title}
-      />
+      <FormControl style={{ width: '100%' }}>
+      <InputLabel shrink style={inputLabelStyle}>
+          Select which type of cards you want to view?
+        </InputLabel>
+        <Select
+          value={filter}
+          onChange={handleFilterChange}
+          style={{
+            backgroundColor: '#EBD8FF',
+            boxShadow: '-2.5776965618133545px 6.873857021331787px 20.621572494506836px 0px rgba(0, 0, 0, 0.23)',
+            color: '#FFFFFF',
+            fontFamily: 'Montserrat, sans-serif',
+            fontSize: '20px',
+            fontStyle: 'normal',
+            fontWeight: 500,
+            lineHeight: 'normal',
+            textTransform: 'uppercase',
+          }}
+        >
+          {choosesVars.map((option) => (
+            <MenuItem key={option.title} value={option.title}>
+              <Checkbox checked={option.title === filter} style={{ color: '#5CD3A8' }} />
+              {option.title}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
       <Box sx={{ marginTop: '100px', marginBottom: '30px', display: 'flex', flexWrap: 'wrap', gap: '20px', flexDirection: 'row', justifyContent: 'center' }}>
         {renderedCards}
       </Box>

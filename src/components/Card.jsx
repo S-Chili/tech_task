@@ -77,19 +77,21 @@ const OutlinedCard = ({ tweets, followers, avatar, id, isFollowing }) => {
               <img src={EclipseCircle} alt="EclipseCircle" style={{ width: '70px', height: '70px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
               <img src={EclipseAvatar} alt="EclipseAvatar" style={{ width: '80px', height: '80px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
               {avatar && (
-                <img
-                  src={avatar}
-                  alt="avatar"
-                  style={{
-                    width: '55px',
-                    height: '55px',
-                    position: 'absolute',
-                    top: '28%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    borderRadius: '50%',
-                  }}
-                />
+                <Link to={`/tweets/${id}`} style={{ textDecoration: 'none' }}>
+                  <img
+                    src={avatar}
+                    alt="avatar"
+                    style={{
+                      width: '55px',
+                      height: '55px',
+                      position: 'absolute',
+                      top: '28%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)',
+                      borderRadius: '50%',
+                    }}
+                  />
+                </Link>
               )}
             </Box>
             <Box sx={{ position: 'absolute', top: '61%', left: '50%', transform: 'translate(-50%, -50%)' }}>
