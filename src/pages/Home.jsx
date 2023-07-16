@@ -8,7 +8,8 @@ import {
   Box, 
   Checkbox, 
   TextField, 
-  Autocomplete, 
+  Autocomplete,
+  Link,
 } from '@mui/material';
 
 const Home = () => {
@@ -64,11 +65,20 @@ const Home = () => {
   ];
 
   const handleFilterChange = (event, value) => {
-    const selectedFilter = value.length > 0 ? value[0].title : 'Show All';
-    const isValidFilter = choosesVars.some((option) => option.title === selectedFilter);
+    if (value.length === 0) {
+      setFilter('Show All');
+    } else {
+      const selectedFilter = value[0].title;
+      const isValidFilter = choosesVars.some((option) => option.title === selectedFilter);
+      if (isValidFilter) {
+        setFilter(selectedFilter);
+      }
+    }
+  };
   
-    if (isValidFilter) {
-      setFilter(selectedFilter);
+  const handleAutocompleteClick = (event) => {
+    if (event.target.textContent === 'Show All') {
+      setFilter('Show All');
     }
   };
 
@@ -77,6 +87,7 @@ const Home = () => {
       <Autocomplete
         multiple
         id="checkboxes-tags-demo"
+        onClick={handleAutocompleteClick}
         options={choosesVars}
         getOptionLabel={(option) => option.title}
         renderOption={(props, option, { selected }) => (
@@ -132,6 +143,10 @@ const Home = () => {
         </Button>
         </Box>
       )}
+      <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '20px', marginTop: '150px' }}>
+        <span style={{ color: '#808080' }}>© 2023 All Rights Reserved | Made by&nbsp; </span>
+        <Link href="https://www.linkedin.com/in/anastasiia-tatarova1/" target="_blank" rel="noopener noreferrer" style={{ color: '#808080' }}>Anastasiia Tatarova</Link>
+      </Box>
     </Box>
   );
 };

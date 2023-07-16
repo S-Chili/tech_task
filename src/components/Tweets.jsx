@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import IconButton from '@mui/material/IconButton';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
 import EclipseAvatar from '../assets/EllipseAvatar.png';
 import LogoContent from '../assets/Logo.png';
 import ImgBig from '../assets/contentImg.png';
-import Typography from '@mui/material/Typography';
 import { faker } from '@faker-js/faker';
+import { 
+  IconButton, 
+  Box, 
+  Card, 
+  CardContent, 
+  Typography,
+} from '@mui/material';
 
 const Tweets = () => {
   const { id } = useParams();
@@ -179,6 +181,10 @@ const Tweets = () => {
             </CardContent>
           </Card>
         ))}
+      </Box>
+      <Box sx={{ display: 'flex', justifyContent: 'center', marginBottom: '20px', marginTop: '50px' }}>
+        <span style={{ color: '#808080' }}>© 2023 All Rights Reserved | Made by&nbsp; </span>
+        <Link to="https://www.linkedin.com/in/anastasiia-tatarova1/" target="_blank" rel="noopener noreferrer" style={{ color: '#808080' }}>Anastasiia Tatarova</Link>
       </Box>
     </Box>
   );
