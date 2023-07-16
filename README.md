@@ -38,6 +38,7 @@ $ git clone https://github.com/s-chili/tech_task.git
 $ Open a terminal and navigate to the root of your project.
 $ Run the `npm install` command to install the project dependencies.
 $ Scripts: - `npm start` 
+```
 
 ## Usage
 
