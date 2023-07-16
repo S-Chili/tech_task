@@ -14,7 +14,7 @@ import { updateFollowingStatus } from 'redux/operations';
 import { Link } from 'react-router-dom';
 import { updateFollowers } from '../redux/userSlice';
 
-const OutlinedCard = ({ user, tweets, followers, avatar, id, isFollowing }) => {
+const OutlinedCard = ({ tweets, followers, avatar, id, isFollowing }) => {
   const dispatch = useDispatch();
   const [currentFollowers, setCurrentFollowers] = useState(followers);
   const [followingStatus, setFollowingStatus] = useState(isFollowing);
@@ -72,7 +72,7 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id, isFollowing }) => {
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', height: '100%' }}>
             <img src={LogoContent} alt="LogoContent" style={{ width: '76px', marginTop: '20px', marginLeft: '20px' }} />
             <img src={ImgBig} alt="ImgBig" style={{ width: '308px', height: '168px', marginLeft: '36px', marginTop: '-15px' }} />
-            <Box sx={{ position: 'absolute', top: '44.2%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+            <Box sx={{ position: 'absolute', top: '46%', left: '50%', transform: 'translate(-50%, -50%)' }}>
               <img src={Rectangle} alt="Rectangle" style={{ width: '380px', height: '14px' }} />
               <img src={EclipseCircle} alt="EclipseCircle" style={{ width: '70px', height: '70px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
               <img src={EclipseAvatar} alt="EclipseAvatar" style={{ width: '80px', height: '80px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
@@ -92,25 +92,7 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id, isFollowing }) => {
                 />
               )}
             </Box>
-            <Box sx={{ position: 'absolute', top: '58%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-              <Typography
-                sx={{
-                  color: '#EBD8FF',
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontSize: '20px',
-                  fontStyle: 'normal',
-                  fontWeight: 500,
-                  lineHeight: 'normal',
-                  textTransform: 'uppercase',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {user}
-              </Typography>
-            </Box>
-            <Box sx={{ position: 'absolute', top: '66%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+            <Box sx={{ position: 'absolute', top: '61%', left: '50%', transform: 'translate(-50%, -50%)' }}>
               <Link to={`/tweets/${id}`} style={{ textDecoration: 'none' }}>
                 <Typography
                   sx={{
@@ -133,7 +115,7 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id, isFollowing }) => {
                 </Typography>
               </Link>
             </Box>
-            <Box sx={{ position: 'absolute', top: '74%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+            <Box sx={{ position: 'absolute', top: '69%', left: '50%', transform: 'translate(-50%, -50%)' }}>
               <Typography
                 sx={{
                   color: '#EBD8FF',
@@ -151,7 +133,7 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id, isFollowing }) => {
                 {formatNumberWithCommas(currentFollowers)} Followers
               </Typography>
             </Box>
-            <Box sx={{ position: 'absolute', bottom: '5.5%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+            <Box sx={{ position: 'absolute', bottom: '8%', left: '50%', transform: 'translate(-50%, -50%)' }}>
               <Button
                 sx={{
                   width: '196px',
