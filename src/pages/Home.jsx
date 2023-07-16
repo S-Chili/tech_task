@@ -34,6 +34,7 @@ const Home = () => {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: '30px',
   };
 
   const renderedCards = users
