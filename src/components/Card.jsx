@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -10,43 +10,39 @@ import ImgBig from '../assets/contentImg.png';
 import EclipseCircle from '../assets/EllipseColor.png';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { getFollowingStatus, updateFollowingStatus } from 'redux/operations';
+import { updateFollowingStatus } from 'redux/operations';
 import { Link } from 'react-router-dom';
+import { updateFollowers } from '../redux/userSlice';
 
-const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
+const OutlinedCard = ({ user, tweets, followers, avatar, id, isFollowing }) => {
   const dispatch = useDispatch();
-  const [isFollowing, setIsFollowing] = useState(false);
   const [currentFollowers, setCurrentFollowers] = useState(followers);
+  const [followingStatus, setFollowingStatus] = useState(isFollowing);
 
   useEffect(() => {
-    getFollowingStatus(id)
-      .then((status) => {
-        setIsFollowing(status);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [id]);
+    setFollowingStatus(isFollowing);
+  }, [isFollowing]);
 
-  const handleFollowClick = () => {
-    const updatedFollowersCount = isFollowing ? currentFollowers - 1 : currentFollowers + 1;
-
-    setIsFollowing(!isFollowing);
+  const handleFollowClick = async () => {
+    const updatedFollowersCount = followingStatus ? currentFollowers - 1 : currentFollowers + 1;
+  
+    setFollowingStatus(!followingStatus);
     setCurrentFollowers(updatedFollowersCount);
-
+  
     dispatch(
       updateFollowingStatus({
         id,
-        isFollowing: !isFollowing,
-        followers: updatedFollowersCount
+        isFollowing: !followingStatus,
+        followers: updatedFollowersCount,
       })
     )
-      .then(() => {
-        setCurrentFollowers(updatedFollowersCount);
+      .then((response) => {
+        const { id } = response.payload;
+        dispatch(updateFollowers({ userId: id, updatedFollowers: updatedFollowersCount }));
       })
       .catch((error) => {
         console.log(error);
-        setIsFollowing(!isFollowing);
+        setFollowingStatus(!followingStatus);
         setCurrentFollowers(followers);
       });
   };
@@ -59,10 +55,7 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
   };
 
   return (
-    <Box sx={{
-      margin: 0,
-      }} 
-    >
+    <Box sx={{ margin: 0 }}>
       <Card
         sx={{
           width: 380,
@@ -72,10 +65,10 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
             'linear-gradient(142deg, #471CA9 0%, #5736A3 69.10%, #4B2A99 100%)',
           boxShadow:
             '-2.5776965618133545px 6.873857021331787px 20.621572494506836px 0px rgba(0, 0, 0, 0.23)',
-            margin: 0,
+          margin: 0,
         }}
       >
-        <CardContent sx={{ position: 'relative', height: '100%', padding: 0}}>
+        <CardContent sx={{ position: 'relative', height: '100%', padding: 0 }}>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', height: '100%' }}>
             <img src={LogoContent} alt="LogoContent" style={{ width: '76px', marginTop: '20px', marginLeft: '20px' }} />
             <img src={ImgBig} alt="ImgBig" style={{ width: '308px', height: '168px', marginLeft: '36px', marginTop: '-15px' }} />
@@ -118,27 +111,27 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
               </Typography>
             </Box>
             <Box sx={{ position: 'absolute', top: '66%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-            <Link to={`/tweets/${id}`} style={{ textDecoration: 'none' }}>
-            <Typography
-                sx={{
-                  color: '#EBD8FF',
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontSize: '20px',
-                  fontStyle: 'normal',
-                  fontWeight: 500,
-                  lineHeight: 'normal',
-                  textTransform: 'uppercase',
-                  '&:hover': {
-                    color: '#5CD3A8',
-                  },
-                  '&:active': {
-                    color: '#5CD3A8',
-                  },
-                }}
-              >
-                {tweets} tweets
-              </Typography>
-            </Link>
+              <Link to={`/tweets/${id}`} style={{ textDecoration: 'none' }}>
+                <Typography
+                  sx={{
+                    color: '#EBD8FF',
+                    fontFamily: 'Montserrat, sans-serif',
+                    fontSize: '20px',
+                    fontStyle: 'normal',
+                    fontWeight: 500,
+                    lineHeight: 'normal',
+                    textTransform: 'uppercase',
+                    '&:hover': {
+                      color: '#5CD3A8',
+                    },
+                    '&:active': {
+                      color: '#5CD3A8',
+                    },
+                  }}
+                >
+                  {tweets} tweets
+                </Typography>
+              </Link>
             </Box>
             <Box sx={{ position: 'absolute', top: '74%', left: '50%', transform: 'translate(-50%, -50%)' }}>
               <Typography
@@ -163,7 +156,7 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
                 sx={{
                   width: '196px',
                   borderRadius: '10.311px',
-                  background: isFollowing ? '#5CD3A8' : '#EBD8FF',
+                  background: followingStatus ? '#5CD3A8' : '#EBD8FF',
                   boxShadow: '0px 3.4369285106658936px 3.4369285106658936px 0px rgba(0, 0, 0, 0.25)',
                   padding: '14px 28px',
                   color: '#373737',
@@ -174,16 +167,16 @@ const OutlinedCard = ({ user, tweets, followers, avatar, id }) => {
                   lineHeight: 'normal',
                   textTransform: 'uppercase',
                   '&:hover': {
-                    background: '#5CD3A8',
+                    background: followingStatus ? '#5CD3A8' : '#EBD8FF',
                   },
                   '&:active': {
-                    background: '#5CD3A8',
+                    background: followingStatus ? '#5CD3A8' : '#EBD8FF',
                   },
                 }}
                 variant="contained"
                 onClick={handleFollowClick}
               >
-                {isFollowing ? 'Following' : 'Follow'}
+                {followingStatus ? 'Following' : 'Follow'}
               </Button>
             </Box>
           </Box>

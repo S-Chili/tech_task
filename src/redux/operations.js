@@ -8,17 +8,6 @@ export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
   return response.data;
 });
 
-export const getFollowingStatus = async (id) => {
-  try {
-    const response = await fetch(`${BASE_URL}/${id}`);
-    const data = await response.json();
-    return data.isFollowing;
-  } catch (error) {
-    console.log(`Помилка при отриманні стану фоловінгу для користувача ${id}:`, error);
-    throw error;
-  }
-};
-
 export const updateFollowingStatus = createAsyncThunk(
   'users/updateFollowingStatus',
   async ({ id, isFollowing, followers }, thunkAPI) => {
@@ -34,7 +23,7 @@ export const updateFollowingStatus = createAsyncThunk(
         isFollowing
       };
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      return thunkAPI.rejectWithValue({ message: error.message });
     }
   }
 );

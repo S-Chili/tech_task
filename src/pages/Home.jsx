@@ -29,17 +29,6 @@ const Home = () => {
     marginTop: '10px',
   };
   
-  // const cardGridStyle = {
-  //   margin: '0 auto',
-  //   marginTop: '100px',
-  //   display: 'grid',
-  //   gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
-  //   gridGap: '20px',
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   width: '100vh',
-  // };
-
   const containerStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -63,6 +52,7 @@ const Home = () => {
         followers={user.followers}
         avatar={user.avatar}
         id={user.id}
+        isFollowing={user.isFollowing}
       />
     ));
 

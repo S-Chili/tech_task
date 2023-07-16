@@ -23,9 +23,12 @@ const usersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchUsers.fulfilled, (state, action) => {
-        state.users = action.payload.map((user) => ({ ...user, id: user.id }));
-      })
+    .addCase(fetchUsers.fulfilled, (state, action) => {
+      const users = action.payload;
+      if (Array.isArray(users)) {
+        state.users = users.map((user) => ({ ...user, id: user.id }));
+      }
+    })
       .addCase(updateFollowingStatus.fulfilled, (state, action) => {
         const { id, isFollowing, updatedFollowers } = action.payload;
         const user = state.users.find((user) => user.id === id);
